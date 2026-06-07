@@ -1,7 +1,7 @@
 using ContratacaoService.Application.Ports;
 using ContratacaoService.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.Api.Controllers;
 

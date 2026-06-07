@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PropostaService.Application\PropostaService.Application.csproj" />
     <ProjectReference Include="..\PropostaService.Infrastructure\PropostaService.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.Observability\Shared.Observability.csproj" />
+    <ProjectReference Include="..\..\Compartilhado\Compartilhado.Observabilidade\Compartilhado.Observabilidade.csproj" />
   </ItemGroup>
 
 </Project>

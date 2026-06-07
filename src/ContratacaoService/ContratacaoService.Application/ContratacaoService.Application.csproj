@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\ContratacaoService.Domain\ContratacaoService.Domain.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.Contracts\Shared.Contracts.csproj" />
+    <ProjectReference Include="..\..\Compartilhado\Compartilhado.Contratos\Compartilhado.Contratos.csproj" />
   </ItemGroup>
 
   <ItemGroup>

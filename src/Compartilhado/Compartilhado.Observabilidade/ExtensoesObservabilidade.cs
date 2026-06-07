@@ -8,28 +8,28 @@ using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Formatting.Compact;
 
-namespace Shared.Observability;
+namespace Compartilhado.Observabilidade;
 
 public static class ExtensoesObservabilidade
 {
-    public static WebApplicationBuilder AdicionarObservabilidadeIndt(this WebApplicationBuilder builder, string serviceName)
+    public static WebApplicationBuilder AdicionarObservabilidadeIndt(this WebApplicationBuilder builder, string nomeServico)
     {
-        var otlpEndpoint = builder.Configuration["Observability:OtlpEndpoint"];
-        var logLevel = builder.Configuration["Observability:LogLevel"] ?? "Information";
+        var endpointOtlp = builder.Configuration["Observabilidade:EndpointOtlp"];
+        var nivelLog = builder.Configuration["Observabilidade:NivelLog"] ?? "Information";
 
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Is(Enum.TryParse<Serilog.Events.LogEventLevel>(logLevel, true, out var level)
-                ? level
+            .MinimumLevel.Is(Enum.TryParse<Serilog.Events.LogEventLevel>(nivelLog, true, out var nivel)
+                ? nivel
                 : Serilog.Events.LogEventLevel.Information)
             .Enrich.FromLogContext()
-            .Enrich.WithProperty("Service", serviceName)
+            .Enrich.WithProperty("Servico", nomeServico)
             .WriteTo.Console(new RenderedCompactJsonFormatter())
             .CreateLogger();
 
         builder.Host.UseSerilog();
 
         builder.Services.AddOpenTelemetry()
-            .ConfigureResource(r => r.AddService(serviceName))
+            .ConfigureResource(r => r.AddService(nomeServico))
             .WithTracing(tracing =>
             {
                 tracing
@@ -37,8 +37,8 @@ public static class ExtensoesObservabilidade
                     .AddHttpClientInstrumentation()
                     .AddEntityFrameworkCoreInstrumentation();
 
-                if (!string.IsNullOrWhiteSpace(otlpEndpoint))
-                    tracing.AddOtlpExporter(o => o.Endpoint = new Uri(otlpEndpoint));
+                if (!string.IsNullOrWhiteSpace(endpointOtlp))
+                    tracing.AddOtlpExporter(o => o.Endpoint = new Uri(endpointOtlp));
             })
             .WithMetrics(metrics =>
             {
@@ -46,8 +46,8 @@ public static class ExtensoesObservabilidade
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation();
 
-                if (!string.IsNullOrWhiteSpace(otlpEndpoint))
-                    metrics.AddOtlpExporter(o => o.Endpoint = new Uri(otlpEndpoint));
+                if (!string.IsNullOrWhiteSpace(endpointOtlp))
+                    metrics.AddOtlpExporter(o => o.Endpoint = new Uri(endpointOtlp));
             });
 
         return builder;

@@ -6,7 +6,7 @@ using ContratacaoService.Application.Handlers;
 using ContratacaoService.Application.Ports;
 using FluentAssertions;
 using NSubstitute;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.UnitTests;
 

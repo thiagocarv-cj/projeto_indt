@@ -11,7 +11,7 @@ A plataforma INDT usa **OpenTelemetry** (traces + metrics) e **Serilog** (logs J
 | Logs | Serilog `RenderedCompactJsonFormatter` no stdout |
 | Health | `/health` (liveness), `/health/ready` (PostgreSQL + RabbitMQ) |
 
-Extensão compartilhada: `Shared.Observability.AddIndtObservability()`.
+Extensão compartilhada: `Compartilhado.Observabilidade.ExtensoesObservabilidade.AdicionarObservabilidadeIndt()`.
 
 ## Configuração
 
@@ -19,19 +19,19 @@ Extensão compartilhada: `Shared.Observability.AddIndtObservability()`.
 
 ```json
 {
-  "Observability": {
-    "OtlpEndpoint": "http://otel-collector:4317",
-    "LogLevel": "Information"
+  "Observabilidade": {
+    "EndpointOtlp": "http://otel-collector:4317",
+    "NivelLog": "Information"
   }
 }
 ```
 
 | Variável Docker | Descrição |
 |-----------------|-----------|
-| `Observability__OtlpEndpoint` | Endpoint OTLP gRPC do collector |
-| `Observability__LogLevel` | Nível mínimo Serilog |
+| `Observabilidade__EndpointOtlp` | Endpoint OTLP gRPC do collector |
+| `Observabilidade__NivelLog` | Nível mínimo Serilog |
 
-Deixe `OtlpEndpoint` vazio para desabilitar export OTLP (útil em testes).
+Deixe `EndpointOtlp` vazio para desabilitar export OTLP (útil em testes).
 
 ## OpenTelemetry Collector (dev)
 
@@ -55,7 +55,7 @@ Variável típica no agente: `DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT=0.
 1. Adicione exporter `elasticsearch` no collector, ou
 2. Colete stdout JSON com Filebeat/Fluent Bit → Elasticsearch Data Streams
 
-Campos úteis nos logs: `@t`, `Level`, `MessageTemplate`, `TraceId`, `SpanId`, `Service`.
+Campos úteis nos logs: `@t`, `Level`, `MessageTemplate`, `TraceId`, `SpanId`, `Servico`.
 
 ### AWS CloudWatch
 
@@ -68,15 +68,15 @@ Use o **ADOT Collector** (AWS Distro for OpenTelemetry) com exporters:
 
 | Componente | Span / tags |
 |------------|-------------|
-| `RabbitMqPropostaEventPublisher` | `messaging.publish`, `routing_key`, `proposta.id` |
-| `PropostaAprovadaBackgroundConsumer` | `messaging.consume`, `queue`, `proposta.id` |
-| `PropostaHttpClient` | `http.client`, latência, `proposta.id` |
+| `PublicadorEventosPropostaRabbitMq` | `messaging.publish`, `routing_key`, `proposta.id` |
+| `ConsumidorPropostaAprovadaPlanoFundo` | `messaging.consume`, `queue`, `proposta.id` |
+| `ClienteHttpProposta` | `http.client`, latência, `proposta.id` |
 
 ## Propagação AMQP
 
 O publisher inclui `traceparent` e `tracestate` em `BasicProperties.Headers`. O consumer restaura `ActivityContext` para manter o mesmo `TraceId` ponta a ponta.
 
-Helper: `Shared.Observability.Messaging.AmqpTracePropagation`.
+Helper: `Compartilhado.Observabilidade.Mensageria.PropagacaoRastreamentoRabbitMq`.
 
 ## Exemplo de log estruturado
 
@@ -88,7 +88,7 @@ Helper: `Shared.Observability.Messaging.AmqpTracePropagation`.
   "PropostaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "TraceId": "4bf92f3577b34da6a3ce929d0e0e4736",
   "SpanId": "00f067aa0ba902b7",
-  "Service": "ContratacaoService"
+  "Servico": "ContratacaoService"
 }
 ```
 

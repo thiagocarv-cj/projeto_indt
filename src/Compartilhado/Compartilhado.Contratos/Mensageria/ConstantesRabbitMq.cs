@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Mensageria;
+namespace Compartilhado.Contratos.Mensageria;
 
 public static class ConstantesRabbitMq
 {

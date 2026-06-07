@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Eventos;
+namespace Compartilhado.Contratos.Eventos;
 
 public record EventoPropostaAprovada(
     Guid PropostaId,

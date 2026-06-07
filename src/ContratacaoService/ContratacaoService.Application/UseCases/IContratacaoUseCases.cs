@@ -1,6 +1,6 @@
 using ContratacaoService.Application.DTOs;
-using Shared.Contracts.Eventos;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Eventos;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.Application.UseCases;
 

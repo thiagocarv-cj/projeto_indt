@@ -1,5 +1,5 @@
 using ContratacaoService.Domain.Entities;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.Application.Ports;
 

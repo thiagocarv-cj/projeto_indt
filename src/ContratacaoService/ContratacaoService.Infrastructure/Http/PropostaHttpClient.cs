@@ -4,7 +4,7 @@ using System.Text.Json;
 using ContratacaoService.Application.Ports;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.Infrastructure.Http;
 

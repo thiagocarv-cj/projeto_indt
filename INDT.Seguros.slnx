@@ -1,5 +1,9 @@
 <Solution>
   <Folder Name="/src/" />
+  <Folder Name="/src/Compartilhado/">
+    <Project Path="src/Compartilhado/Compartilhado.Contratos/Compartilhado.Contratos.csproj" />
+    <Project Path="src/Compartilhado/Compartilhado.Observabilidade/Compartilhado.Observabilidade.csproj" />
+  </Folder>
   <Folder Name="/src/ContratacaoService/">
     <Project Path="src/ContratacaoService/ContratacaoService.Api/ContratacaoService.Api.csproj" />
     <Project Path="src/ContratacaoService/ContratacaoService.Application/ContratacaoService.Application.csproj" />
@@ -11,10 +15,6 @@
     <Project Path="src/PropostaService/PropostaService.Application/PropostaService.Application.csproj" />
     <Project Path="src/PropostaService/PropostaService.Domain/PropostaService.Domain.csproj" />
     <Project Path="src/PropostaService/PropostaService.Infrastructure/PropostaService.Infrastructure.csproj" />
-  </Folder>
-  <Folder Name="/src/Shared/">
-    <Project Path="src/Shared/Shared.Contracts/Shared.Contracts.csproj" />
-    <Project Path="src/Shared/Shared.Observability/Shared.Observability.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/ContratacaoService.IntegrationTests/ContratacaoService.IntegrationTests.csproj" />

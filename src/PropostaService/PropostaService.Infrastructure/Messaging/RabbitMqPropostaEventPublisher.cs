@@ -6,9 +6,9 @@ using PropostaService.Application.Ports;
 using PropostaService.Domain.Entities;
 using PropostaService.Domain.Enums;
 using RabbitMQ.Client;
-using Shared.Contracts.Eventos;
-using Shared.Contracts.Mensageria;
-using Shared.Observability.Messaging;
+using Compartilhado.Contratos.Eventos;
+using Compartilhado.Contratos.Mensageria;
+using Compartilhado.Observabilidade.Mensageria;
 
 namespace PropostaService.Infrastructure.Messaging;
 

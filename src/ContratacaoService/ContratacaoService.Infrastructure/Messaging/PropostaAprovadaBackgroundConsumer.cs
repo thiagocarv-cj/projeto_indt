@@ -7,9 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Shared.Contracts.Eventos;
-using Shared.Contracts.Mensageria;
-using Shared.Observability.Messaging;
+using Compartilhado.Contratos.Eventos;
+using Compartilhado.Contratos.Mensageria;
+using Compartilhado.Observabilidade.Mensageria;
 
 namespace ContratacaoService.Infrastructure.Messaging;
 

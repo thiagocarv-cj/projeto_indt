@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ContratacaoService.Application\ContratacaoService.Application.csproj" />
     <ProjectReference Include="..\ContratacaoService.Infrastructure\ContratacaoService.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.Observability\Shared.Observability.csproj" />
+    <ProjectReference Include="..\..\Compartilhado\Compartilhado.Observabilidade\Compartilhado.Observabilidade.csproj" />
   </ItemGroup>
 
 </Project>

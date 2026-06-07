@@ -101,7 +101,7 @@ curl -X PATCH http://localhost:5001/api/propostas/{PROPOSTA_ID}/status \
 
 ## Observabilidade
 
-Logs estruturados JSON no stdout (Serilog). Traces e métricas exportados via OTLP para o collector configurado em `Observability__OtlpEndpoint`.
+Logs estruturados JSON no stdout (Serilog). Traces e métricas exportados via OTLP para o collector configurado em `Observabilidade__EndpointOtlp`.
 
 | Backend | Configuração |
 |---------|--------------|
@@ -117,9 +117,9 @@ Detalhes: [docs/observabilidade.md](docs/observabilidade.md).
 src/
   PropostaService/          # Domain, Application, Infrastructure, Api
   ContratacaoService/       # Domain, Application, Infrastructure, Api
-  Shared/
-    Shared.Contracts/        # Eventos e constantes RabbitMQ
-    Shared.Observability/    # OpenTelemetry + Serilog
+  Compartilhado/
+    Compartilhado.Contratos/       # Eventos e constantes RabbitMQ
+    Compartilhado.Observabilidade/ # OpenTelemetry + Serilog
 tests/                      # Unitários e integração (Testcontainers)
 deploy/                     # Configuração OTel Collector
 docker-compose.yml

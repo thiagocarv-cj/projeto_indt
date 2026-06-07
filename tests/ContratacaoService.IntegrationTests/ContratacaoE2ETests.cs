@@ -4,7 +4,7 @@ using ContratacaoService.Application.DTOs;
 using FluentAssertions;
 using PropostaService.Application.DTOs;
 using PropostaService.Domain.Enums;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.IntegrationTests;
 

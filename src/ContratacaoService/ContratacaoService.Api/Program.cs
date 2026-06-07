@@ -6,8 +6,8 @@ using ContratacaoService.Infrastructure.Messaging;
 using ContratacaoService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shared.Contracts.Propostas;
-using Shared.Observability;
+using Compartilhado.Contratos.Propostas;
+using Compartilhado.Observabilidade;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AdicionarObservabilidadeIndt("ContratacaoService");

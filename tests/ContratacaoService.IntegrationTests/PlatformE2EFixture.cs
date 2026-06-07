@@ -55,7 +55,7 @@ public class AmbienteTesteE2EPlataforma : IAsyncLifetime
                 builder.UseSetting("RabbitMQ:Port", _rabbit.GetMappedPublicPort(5672).ToString());
                 builder.UseSetting("RabbitMQ:UserName", "guest");
                 builder.UseSetting("RabbitMQ:Password", "guest");
-                builder.UseSetting("Observability:OtlpEndpoint", string.Empty);
+                builder.UseSetting("Observabilidade:EndpointOtlp", string.Empty);
             });
 
             var urlBaseProposta = FabricaProposta.Server.BaseAddress!.ToString().TrimEnd('/');
@@ -68,7 +68,7 @@ public class AmbienteTesteE2EPlataforma : IAsyncLifetime
                 builder.UseSetting("RabbitMQ:UserName", "guest");
                 builder.UseSetting("RabbitMQ:Password", "guest");
                 builder.UseSetting("PropostaService:BaseUrl", urlBaseProposta);
-                builder.UseSetting("Observability:OtlpEndpoint", string.Empty);
+                builder.UseSetting("Observabilidade:EndpointOtlp", string.Empty);
 
                 builder.ConfigureTestServices(services =>
                 {

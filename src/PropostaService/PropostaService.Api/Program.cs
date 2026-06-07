@@ -6,7 +6,7 @@ using PropostaService.Application.Validators;
 using PropostaService.Infrastructure;
 using PropostaService.Infrastructure.Messaging;
 using PropostaService.Infrastructure.Persistence;
-using Shared.Observability;
+using Compartilhado.Observabilidade;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AdicionarObservabilidadeIndt("PropostaService");

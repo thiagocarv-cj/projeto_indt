@@ -2,7 +2,7 @@ using FluentAssertions;
 using NSubstitute;
 using ContratacaoService.Application.Handlers;
 using ContratacaoService.Application.Ports;
-using Shared.Contracts.Eventos;
+using Compartilhado.Contratos.Eventos;
 
 namespace ContratacaoService.UnitTests;
 

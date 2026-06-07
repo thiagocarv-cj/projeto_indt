@@ -3,8 +3,8 @@ using ContratacaoService.Application.Ports;
 using ContratacaoService.Application.UseCases;
 using ContratacaoService.Domain.Entities;
 using Microsoft.Extensions.Logging;
-using Shared.Contracts.Eventos;
-using Shared.Contracts.Propostas;
+using Compartilhado.Contratos.Eventos;
+using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.Application.Handlers;
 
