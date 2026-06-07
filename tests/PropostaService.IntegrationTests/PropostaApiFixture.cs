@@ -11,6 +11,7 @@ public class AmbienteTesteApiProposta : IAsyncLifetime
 
     public WebApplicationFactory<Program>? Fabrica { get; private set; }
     public bool EstaPronto => Fabrica is not null;
+    public string MotivoIndisponibilidade { get; private set; } = "Docker indisponível — inicie o Docker Desktop para executar testes de integração.";
     public HttpClient Cliente => Fabrica!.CreateClient();
 
     public async Task InitializeAsync()
@@ -40,9 +41,10 @@ public class AmbienteTesteApiProposta : IAsyncLifetime
                 builder.UseSetting("Observabilidade:EndpointOtlp", string.Empty);
             });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             Fabrica = null;
+            MotivoIndisponibilidade = ex.Message;
         }
     }
 

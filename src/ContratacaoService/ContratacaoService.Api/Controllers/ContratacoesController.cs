@@ -1,4 +1,4 @@
-using ContratacaoService.Application.UseCases;
+﻿using ContratacaoService.Application.Portas.Entrada;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContratacaoService.Api.Controllers;

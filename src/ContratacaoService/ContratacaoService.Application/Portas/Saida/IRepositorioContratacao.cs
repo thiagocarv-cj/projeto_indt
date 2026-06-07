@@ -1,7 +1,6 @@
-using ContratacaoService.Domain.Entities;
-using Compartilhado.Contratos.Propostas;
+﻿using ContratacaoService.Domain.Entities;
 
-namespace ContratacaoService.Application.Ports;
+namespace ContratacaoService.Application.Portas.Saida;
 
 public interface IRepositorioContratacao
 {
@@ -11,17 +10,4 @@ public interface IRepositorioContratacao
     Task<bool> ExistePorPropostaIdAsync(Guid propostaId, CancellationToken cancellationToken = default);
     Task<(IReadOnlyList<Contratacao> Itens, int TotalRegistros)> ListarPaginadoAsync(int pagina, int tamanhoPagina, CancellationToken cancellationToken = default);
     Task SalvarAlteracoesAsync(CancellationToken cancellationToken = default);
-}
-
-public interface IClienteServicoProposta
-{
-    Task<RespostaStatusPropostaCompartilhada?> ObterStatusAsync(Guid propostaId, CancellationToken cancellationToken = default);
-    Task<HttpResponseMessage> AlterarStatusAsync(Guid propostaId, SolicitacaoAlterarStatusPropostaCompartilhada solicitacao, CancellationToken cancellationToken = default);
-}
-
-public class ExcecaoServicoPropostaIndisponivel : Exception
-{
-    public ExcecaoServicoPropostaIndisponivel(string message, Exception? inner = null) : base(message, inner)
-    {
-    }
 }

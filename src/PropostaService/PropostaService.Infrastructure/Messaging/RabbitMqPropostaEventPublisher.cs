@@ -1,8 +1,8 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using PropostaService.Application.Ports;
+using PropostaService.Application.Portas.Saida;
 using PropostaService.Domain.Entities;
 using PropostaService.Domain.Enums;
 using RabbitMQ.Client;

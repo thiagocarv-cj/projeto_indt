@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization;
-using ContratacaoService.Application.Ports;
-using ContratacaoService.Application.UseCases;
+﻿using System.Text.Json.Serialization;
+using ContratacaoService.Application.Excecoes;
+using ContratacaoService.Application.Portas.Entrada;
 using ContratacaoService.Infrastructure;
 using ContratacaoService.Infrastructure.Messaging;
 using ContratacaoService.Infrastructure.Persistence;

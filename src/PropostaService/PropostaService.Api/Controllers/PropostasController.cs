@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PropostaService.Application.DTOs;
-using PropostaService.Application.UseCases;
+using PropostaService.Application.Portas.Entrada;
 using PropostaService.Domain.Excecoes;
 
 namespace PropostaService.Api.Controllers;

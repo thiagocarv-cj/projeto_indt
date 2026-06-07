@@ -1,7 +1,7 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using ContratacaoService.Application.UseCases;
+using ContratacaoService.Application.Portas.Entrada;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -64,8 +64,8 @@ public class ConsumidorPropostaAprovadaPlanoFundo(
             activity?.SetTag("proposta.id", evento.PropostaId.ToString());
 
             using var scope = scopeFactory.CreateScope();
-            var casoDeUso = scope.ServiceProvider.GetRequiredService<IIngerirPropostaAprovadaCasoDeUso>();
-            await casoDeUso.ExecutarAsync(evento);
+            var CasoDeUso = scope.ServiceProvider.GetRequiredService<IIngerirPropostaAprovadaCasoDeUso>();
+            await CasoDeUso.ExecutarAsync(evento);
 
             _channel.BasicAck(ea.DeliveryTag, multiple: false);
         }

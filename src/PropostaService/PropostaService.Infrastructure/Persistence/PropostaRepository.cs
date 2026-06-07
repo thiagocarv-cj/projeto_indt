@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using PropostaService.Application.Ports;
+﻿using Microsoft.EntityFrameworkCore;
+using PropostaService.Application.Portas.Saida;
 using PropostaService.Domain.Entities;
 using PropostaService.Domain.Enums;
 

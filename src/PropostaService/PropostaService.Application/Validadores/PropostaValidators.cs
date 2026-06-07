@@ -1,8 +1,8 @@
-using FluentValidation;
+﻿using FluentValidation;
 using PropostaService.Application.DTOs;
 using PropostaService.Domain.Enums;
 
-namespace PropostaService.Application.Validators;
+namespace PropostaService.Application.Validadores;
 
 public class ValidadorSolicitacaoCriarProposta : AbstractValidator<SolicitacaoCriarProposta>
 {

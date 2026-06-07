@@ -1,26 +1,21 @@
 using System.Net;
 using System.Net.Http.Json;
+using Compartilhado.Contratos.Propostas;
 using ContratacaoService.Application.DTOs;
 using FluentAssertions;
 using PropostaService.Application.DTOs;
 using PropostaService.Domain.Enums;
-using Compartilhado.Contratos.Propostas;
+using Xunit;
 
 namespace ContratacaoService.IntegrationTests;
 
 public class TestesE2EContratacao(AmbienteTesteE2EPlataforma ambiente) : IClassFixture<AmbienteTesteE2EPlataforma>
 {
-    private void GarantirAmbientePronto()
+    [SkippableFact]
+    public async Task AprovarViaIntermediario_CasoDeUsoDevePersistirContratacao()
     {
-        if (!ambiente.EstaPronto)
-            throw new InvalidOperationException(
-                "Docker indisponível — testes de integração requerem Docker Desktop em execução.");
-    }
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
 
-    [Fact]
-    public async Task AprovarViaIntermediario_ManipuladorDevePersistirContratacao()
-    {
-        GarantirAmbientePronto();
         var criacao = await ambiente.ClienteProposta.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Elena Souza", "12345678901", 25000m));
         criacao.EnsureSuccessStatusCode();
@@ -57,10 +52,11 @@ public class TestesE2EContratacao(AmbienteTesteE2EPlataforma ambiente) : IClassF
         paginado.Itens.Should().Contain(x => x.PropostaId == proposta.Id);
     }
 
-    [Fact]
+    [SkippableFact]
     public async Task ConsultarStatusViaIntermediario_DeveRetornarStatusDoPropostaService()
     {
-        GarantirAmbientePronto();
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
+
         var criacao = await ambiente.ClienteProposta.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Felipe Lima", "32165498700", 7000m));
         var proposta = await criacao.Content.ReadFromJsonAsync<RespostaProposta>();

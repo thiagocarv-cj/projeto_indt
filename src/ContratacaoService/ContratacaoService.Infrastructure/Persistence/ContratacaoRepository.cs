@@ -1,4 +1,4 @@
-using ContratacaoService.Application.Ports;
+﻿using ContratacaoService.Application.Portas.Saida;
 using ContratacaoService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

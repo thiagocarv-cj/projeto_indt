@@ -3,22 +3,17 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using PropostaService.Application.DTOs;
 using PropostaService.Domain.Enums;
+using Xunit;
 
 namespace PropostaService.IntegrationTests;
 
 public class TestesApiProposta(AmbienteTesteApiProposta ambiente) : IClassFixture<AmbienteTesteApiProposta>
 {
-    private void GarantirAmbientePronto()
-    {
-        if (!ambiente.EstaPronto)
-            throw new InvalidOperationException(
-                "Docker indisponível — testes de integração requerem Docker Desktop em execução.");
-    }
-
-    [Fact]
+    [SkippableFact]
     public async Task CriarProposta_DeveRetornar201()
     {
-        GarantirAmbientePronto();
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
+
         var resposta = await ambiente.Cliente.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Ana Silva", "11122233344", 15000m));
 
@@ -27,10 +22,11 @@ public class TestesApiProposta(AmbienteTesteApiProposta ambiente) : IClassFixtur
         corpo!.Status.Should().Be(StatusProposta.EmAnalise);
     }
 
-    [Fact]
+    [SkippableFact]
     public async Task FluxoCompleto_CriarConsultarAprovar_DeveRetornarAprovada()
     {
-        GarantirAmbientePronto();
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
+
         var criacao = await ambiente.Cliente.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Bruno Costa", "99988877766", 12000m));
         var proposta = await criacao.Content.ReadFromJsonAsync<RespostaProposta>();
@@ -47,10 +43,11 @@ public class TestesApiProposta(AmbienteTesteApiProposta ambiente) : IClassFixtur
         status!.Status.Should().Be(StatusProposta.Aprovada);
     }
 
-    [Fact]
+    [SkippableFact]
     public async Task PendenciaSemObservacaoValida_DeveRetornar400()
     {
-        GarantirAmbientePronto();
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
+
         var criacao = await ambiente.Cliente.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Carlos", "55566677788", 8000m));
         var proposta = await criacao.Content.ReadFromJsonAsync<RespostaProposta>();
@@ -62,10 +59,11 @@ public class TestesApiProposta(AmbienteTesteApiProposta ambiente) : IClassFixtur
         patch.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
-    [Fact]
+    [SkippableFact]
     public async Task PendenciaComObservacaoValida_DeveRetornar200()
     {
-        GarantirAmbientePronto();
+        Skip.IfNot(ambiente.EstaPronto, ambiente.MotivoIndisponibilidade);
+
         var criacao = await ambiente.Cliente.PostAsJsonAsync("/api/propostas",
             new SolicitacaoCriarProposta("Diana", "44455566677", 9000m));
         var proposta = await criacao.Content.ReadFromJsonAsync<RespostaProposta>();

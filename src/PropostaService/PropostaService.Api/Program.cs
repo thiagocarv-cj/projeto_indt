@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using PropostaService.Application.Validators;
+using PropostaService.Application.Validadores;
 using PropostaService.Infrastructure;
 using PropostaService.Infrastructure.Messaging;
 using PropostaService.Infrastructure.Persistence;

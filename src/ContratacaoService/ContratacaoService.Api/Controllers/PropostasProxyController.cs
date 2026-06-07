@@ -1,5 +1,5 @@
-using ContratacaoService.Application.Ports;
-using ContratacaoService.Application.UseCases;
+﻿using ContratacaoService.Application.Excecoes;
+using ContratacaoService.Application.Portas.Entrada;
 using Microsoft.AspNetCore.Mvc;
 using Compartilhado.Contratos.Propostas;
 

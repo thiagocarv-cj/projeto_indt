@@ -1,16 +1,16 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using ContratacaoService.Application.Handlers;
-using ContratacaoService.Application.Ports;
+using ContratacaoService.Application.Portas.Saida;
+using ContratacaoService.Application.CasosDeUso;
 using FluentAssertions;
 using NSubstitute;
 using Compartilhado.Contratos.Propostas;
 
 namespace ContratacaoService.UnitTests;
 
-public class TestesAlterarStatusPropostaIntermediarioManipulador
+public class TestesAlterarStatusPropostaIntermediarioCasoDeUso
 {
     [Fact]
     public async Task ExecutarAsync_DeveRepassarRespostaDoPropostaService()
@@ -25,8 +25,8 @@ public class TestesAlterarStatusPropostaIntermediarioManipulador
 
         cliente.AlterarStatusAsync(propostaId, solicitacao, Arg.Any<CancellationToken>()).Returns(respostaEsperada);
 
-        var manipulador = new AlterarStatusPropostaIntermediarioManipulador(cliente);
-        var resposta = await manipulador.ExecutarAsync(propostaId, solicitacao);
+        var CasoDeUso = new AlterarStatusPropostaIntermediarioCasoDeUso(cliente);
+        var resposta = await CasoDeUso.ExecutarAsync(propostaId, solicitacao);
 
         resposta.StatusCode.Should().Be(HttpStatusCode.OK);
         var json = await resposta.Content.ReadAsStringAsync();

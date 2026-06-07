@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PropostaService.Application.Handlers;
-using PropostaService.Application.Ports;
-using PropostaService.Application.UseCases;
+using PropostaService.Application.Portas.Entrada;
+using PropostaService.Application.Portas.Saida;
+using PropostaService.Application.CasosDeUso;
 using PropostaService.Infrastructure.Messaging;
 using PropostaService.Infrastructure.Persistence;
 
@@ -22,11 +22,11 @@ public static class InjecaoDependencia
         services.AddScoped<IRepositorioProposta, RepositorioProposta>();
         services.AddScoped<IPublicadorEventosProposta, PublicadorEventosPropostaRabbitMq>();
 
-        services.AddScoped<ICriarPropostaCasoDeUso, CriarPropostaManipulador>();
-        services.AddScoped<IObterPropostaCasoDeUso, ObterPropostaManipulador>();
-        services.AddScoped<IConsultarStatusPropostaCasoDeUso, ConsultarStatusPropostaManipulador>();
-        services.AddScoped<IListarPropostasCasoDeUso, ListarPropostasManipulador>();
-        services.AddScoped<IAlterarStatusPropostaCasoDeUso, AlterarStatusPropostaManipulador>();
+        services.AddScoped<ICriarPropostaCasoDeUso, CriarPropostaCasoDeUso>();
+        services.AddScoped<IObterPropostaCasoDeUso, ObterPropostaCasoDeUso>();
+        services.AddScoped<IConsultarStatusPropostaCasoDeUso, ConsultarStatusPropostaCasoDeUso>();
+        services.AddScoped<IListarPropostasCasoDeUso, ListarPropostasCasoDeUso>();
+        services.AddScoped<IAlterarStatusPropostaCasoDeUso, AlterarStatusPropostaCasoDeUso>();
 
         return services;
     }

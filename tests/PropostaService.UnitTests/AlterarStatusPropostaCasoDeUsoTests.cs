@@ -1,14 +1,14 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using PropostaService.Application.DTOs;
-using PropostaService.Application.Handlers;
-using PropostaService.Application.Ports;
+using PropostaService.Application.Portas.Saida;
+using PropostaService.Application.CasosDeUso;
 using PropostaService.Domain.Entities;
 using PropostaService.Domain.Enums;
 
 namespace PropostaService.UnitTests;
 
-public class TestesAlterarStatusPropostaManipulador
+public class TestesAlterarStatusPropostaCasoDeUso
 {
     [Fact]
     public async Task ExecutarAsync_Aprovada_DevePublicarEvento()
@@ -17,9 +17,9 @@ public class TestesAlterarStatusPropostaManipulador
         var repositorio = Substitute.For<IRepositorioProposta>();
         repositorio.ObterPorIdAsync(proposta.Id, Arg.Any<CancellationToken>()).Returns(proposta);
         var publicador = Substitute.For<IPublicadorEventosProposta>();
-        var manipulador = new AlterarStatusPropostaManipulador(repositorio, publicador);
+        var CasoDeUso = new AlterarStatusPropostaCasoDeUso(repositorio, publicador);
 
-        await manipulador.ExecutarAsync(proposta.Id, new SolicitacaoAlterarStatusProposta(StatusProposta.Aprovada, null));
+        await CasoDeUso.ExecutarAsync(proposta.Id, new SolicitacaoAlterarStatusProposta(StatusProposta.Aprovada, null));
 
         await publicador.Received(1).PublicarStatusAlteradoAsync(proposta, Arg.Any<CancellationToken>());
         await repositorio.Received(1).SalvarAlteracoesAsync(Arg.Any<CancellationToken>());

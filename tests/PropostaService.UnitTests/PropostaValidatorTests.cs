@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using PropostaService.Domain.Entities;
 using PropostaService.Domain.Enums;
 
@@ -9,7 +9,7 @@ public class TestesValidadorProposta
     [Fact]
     public void FluentValidation_PendenciaComObservacaoCurta_DeveFalhar()
     {
-        var validator = new PropostaService.Application.Validators.ValidadorSolicitacaoAlterarStatusProposta();
+        var validator = new PropostaService.Application.Validadores.ValidadorSolicitacaoAlterarStatusProposta();
         var result = validator.Validate(new PropostaService.Application.DTOs.SolicitacaoAlterarStatusProposta(
             StatusProposta.Pendencias, "curta"));
         result.IsValid.Should().BeFalse();

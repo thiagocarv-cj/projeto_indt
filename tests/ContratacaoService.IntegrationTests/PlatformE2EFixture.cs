@@ -1,6 +1,6 @@
-extern alias PropostaApi;
+﻿extern alias PropostaApi;
 
-using ContratacaoService.Application.Ports;
+using ContratacaoService.Application.Portas.Saida;
 using ContratacaoService.Infrastructure.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -19,6 +19,7 @@ public class AmbienteTesteE2EPlataforma : IAsyncLifetime
     public WebApplicationFactory<PropostaApi::Program>? FabricaProposta { get; private set; }
     public WebApplicationFactory<Program>? FabricaContratacao { get; private set; }
     public bool EstaPronto => FabricaProposta is not null && FabricaContratacao is not null;
+    public string MotivoIndisponibilidade { get; private set; } = "Docker indisponível — inicie o Docker Desktop para executar testes de integração.";
     public HttpClient ClienteProposta => FabricaProposta!.CreateClient();
     public HttpClient ClienteContratacao => FabricaContratacao!.CreateClient();
 
@@ -77,10 +78,11 @@ public class AmbienteTesteE2EPlataforma : IAsyncLifetime
                 });
             });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             FabricaProposta = null;
             FabricaContratacao = null;
+            MotivoIndisponibilidade = ex.Message;
         }
     }
 

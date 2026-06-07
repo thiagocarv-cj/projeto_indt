@@ -1,6 +1,6 @@
-using ContratacaoService.Application.Handlers;
-using ContratacaoService.Application.Ports;
-using ContratacaoService.Application.UseCases;
+﻿using ContratacaoService.Application.Portas.Entrada;
+using ContratacaoService.Application.Portas.Saida;
+using ContratacaoService.Application.CasosDeUso;
 using ContratacaoService.Infrastructure.Http;
 using ContratacaoService.Infrastructure.Messaging;
 using ContratacaoService.Infrastructure.Persistence;
@@ -14,25 +14,23 @@ public static class InjecaoDependencia
 {
     public static IServiceCollection AdicionarInfraestrutura(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<OpcoesRabbitMq>(configuration.GetSection(OpcoesRabbitMq.SectionName));
-        services.Configure<OpcoesServicoProposta>(configuration.GetSection(OpcoesServicoProposta.SectionName));
-
         services.AddDbContext<ContratacaoDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("ContratacaoDb")));
 
+        services.Configure<OpcoesRabbitMq>(configuration.GetSection(OpcoesRabbitMq.SectionName));
+        services.Configure<OpcoesServicoProposta>(configuration.GetSection(OpcoesServicoProposta.SectionName));
+
         services.AddSingleton<IProvedorConexaoRabbitMq, ProvedorConexaoRabbitMq>();
         services.AddScoped<IRepositorioContratacao, RepositorioContratacao>();
-
+        services.AddHostedService<ConsumidorPropostaAprovadaPlanoFundo>();
         services.AddHttpClient<IClienteServicoProposta, ClienteHttpProposta>();
 
-        services.AddScoped<IIngerirPropostaAprovadaCasoDeUso, IngerirPropostaAprovadaManipulador>();
-        services.AddScoped<IConsultarStatusPropostaIntermediarioCasoDeUso, ConsultarStatusPropostaIntermediarioManipulador>();
-        services.AddScoped<IAlterarStatusPropostaIntermediarioCasoDeUso, AlterarStatusPropostaIntermediarioManipulador>();
-        services.AddScoped<IListarContratacoesCasoDeUso, ListarContratacoesManipulador>();
-        services.AddScoped<IObterContratacaoCasoDeUso, ObterContratacaoManipulador>();
-        services.AddScoped<IObterContratacaoPorPropostaCasoDeUso, ObterContratacaoPorPropostaManipulador>();
-
-        services.AddHostedService<ConsumidorPropostaAprovadaPlanoFundo>();
+        services.AddScoped<IIngerirPropostaAprovadaCasoDeUso, IngerirPropostaAprovadaCasoDeUso>();
+        services.AddScoped<IConsultarStatusPropostaIntermediarioCasoDeUso, ConsultarStatusPropostaIntermediarioCasoDeUso>();
+        services.AddScoped<IAlterarStatusPropostaIntermediarioCasoDeUso, AlterarStatusPropostaIntermediarioCasoDeUso>();
+        services.AddScoped<IListarContratacoesCasoDeUso, ListarContratacoesCasoDeUso>();
+        services.AddScoped<IObterContratacaoCasoDeUso, ObterContratacaoCasoDeUso>();
+        services.AddScoped<IObterContratacaoPorPropostaCasoDeUso, ObterContratacaoPorPropostaCasoDeUso>();
 
         return services;
     }

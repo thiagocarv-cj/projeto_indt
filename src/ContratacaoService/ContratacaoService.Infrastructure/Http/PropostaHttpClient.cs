@@ -1,7 +1,8 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using ContratacaoService.Application.Ports;
+using ContratacaoService.Application.Excecoes;
+using ContratacaoService.Application.Portas.Saida;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Compartilhado.Contratos.Propostas;
