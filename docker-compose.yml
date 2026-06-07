@@ -1,0 +1,93 @@
+services:
+  postgres-proposta:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: proposta_db
+      POSTGRES_USER: proposta
+      POSTGRES_PASSWORD: proposta123
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U proposta -d proposta_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres-contratacao:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: contratacao_db
+      POSTGRES_USER: contratacao
+      POSTGRES_PASSWORD: contratacao123
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contratacao -d contratacao_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.96.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./deploy/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+
+  proposta-api:
+    build:
+      context: .
+      dockerfile: src/PropostaService/PropostaService.Api/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      ConnectionStrings__PropostaDb: Host=postgres-proposta;Port=5432;Database=proposta_db;Username=proposta;Password=proposta123
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Port: 5672
+      RabbitMQ__UserName: guest
+      RabbitMQ__Password: guest
+      Observability__OtlpEndpoint: http://otel-collector:4317
+    depends_on:
+      postgres-proposta:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      otel-collector:
+        condition: service_started
+
+  contratacao-api:
+    build:
+      context: .
+      dockerfile: src/ContratacaoService/ContratacaoService.Api/Dockerfile
+    ports:
+      - "5002:8080"
+    environment:
+      ConnectionStrings__ContratacaoDb: Host=postgres-contratacao;Port=5432;Database=contratacao_db;Username=contratacao;Password=contratacao123
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Port: 5672
+      RabbitMQ__UserName: guest
+      RabbitMQ__Password: guest
+      PropostaService__BaseUrl: http://proposta-api:8080
+      Observability__OtlpEndpoint: http://otel-collector:4317
+    depends_on:
+      postgres-contratacao:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      proposta-api:
+        condition: service_started
+      otel-collector:
+        condition: service_started
