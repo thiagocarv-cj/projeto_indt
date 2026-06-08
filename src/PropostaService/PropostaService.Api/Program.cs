@@ -2,9 +2,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using PropostaService.Api.Documentacao;
 using PropostaService.Application.Validadores;
 using PropostaService.Infrastructure;
-using PropostaService.Infrastructure.Messaging;
 using PropostaService.Infrastructure.Persistence;
 using Compartilhado.Observabilidade;
 
@@ -14,15 +14,14 @@ builder.AdicionarObservabilidadeIndt("PropostaService");
 builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AdicionarDocumentacaoSwaggerProposta();
 builder.Services.AdicionarInfraestrutura(builder.Configuration);
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<ValidadorSolicitacaoCriarProposta>();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("PropostaDb")!)
-    .AddRabbitMQ(sp => sp.GetRequiredService<IProvedorConexaoRabbitMq>().ObterConexao());
+    .AddNpgSql(builder.Configuration.GetConnectionString("PropostaDb")!);
 
 var app = builder.Build();
 
@@ -37,6 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.MapControllers();
 app.MapHealthChecks("/health");
